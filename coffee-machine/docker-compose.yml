@@ -1,0 +1,32 @@
+version: "3.5"
+services:
+  app:
+    build: ./
+    command: bundle exec rake
+    environment:
+      - BUNDLE_PATH=/bundle
+      - BUNDLE_JOBS=2
+      - RACK_ENV=development
+      - LANG=C.UTF-8
+    volumes:
+      - gem_storage:/bundle
+      - .:/app
+    stdin_open: true
+    tty: true
+
+  test:
+    build: ./
+    command: bundle exec rspec
+    environment:
+      - BUNDLE_PATH=/bundle
+      - BUNDLE_JOBS=2
+      - RACK_ENV=test
+      - LANG=C.UTF-8
+    volumes:
+      - gem_storage:/bundle
+      - .:/app
+    stdin_open: true
+    tty: true
+
+volumes:
+  gem_storage:
