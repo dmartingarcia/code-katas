@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 require 'byebug'
 
-# This shiny class mimics a queue of tasks that can be enqueued with a delay
-# and then, could be executed in the order, takig into account the delay
+# This shiny class mimics a system for upselling insurance to people that has many cars but just one insurance
+# policy. The idea is to find the cars that are not insured by us and offer them a new policy.
 class Vehicle
   attr_reader :person_id, :vehicle_id
 
@@ -36,7 +36,7 @@ class MockedExternalOwnedVehicleApi
       Vehicle.new("P1", "V8"),
       Vehicle.new("P1", "V3"),
       Vehicle.new("P2", "V6")
-  ].filter{|vehicle| person_ids.include?(vehicle.person_id)}
+    ].filter{|vehicle| person_ids.include?(vehicle.person_id)}
   end
 end
 
