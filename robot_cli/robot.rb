@@ -1,5 +1,8 @@
 class Robot
   attr_reader :x, :y, :facing
+  DIRECTIONS = [:north, :east, :south, :west]
+  RIGHT = 1
+  LEFT = -1
 
   def initialize
     @x = 0
@@ -8,48 +11,32 @@ class Robot
   end
 
   def move_forward
-    x, y = calculate_new_position(@x, @y, @facing)
-    @x = x
-    @y = y
+    case @facing
+    when :north
+      @y += 1
+    when :east
+      @x += 1
+    when :south
+      @y -= 1
+    when :west
+      @x -= 1
+    end
   end
 
   def move_left
-    @facing = calculate_facing_orientation(@facing, :left)
+    calculate_rotation(LEFT)
   end
 
   def move_right
-    @facing = calculate_facing_orientation(@facing, :right)
+    calculate_rotation(RIGHT)
   end
 
   private
 
-  def calculate_facing_orientation(origin, turn_direction)
-    directions = [:north, :east, :south, :west]
-    origin_index = directions.index(origin)
-    case turn_direction
-    when :left
-      origin_index = (origin_index - 1) % directions.size()
-      origin_index = directions.size - 1 if origin_index < 0
-    when :right
-      origin_index = (origin_index + 1) % directions.size()
-    else
-      raise StandardError, "invalid value #{turn_direction}"
-    end
-    directions[origin_index]
-  end
+  def calculate_rotation(direction)
+    origin_index = DIRECTIONS.index(@facing)
 
-  def calculate_new_position(x, y, facing)
-    case facing
-    when :north
-      y += 1
-    when :east
-      x += 1
-    when :south
-      y -= 1
-    when :west
-      x -= 1
-    end
-
-    return [x, y]
+    origin_index = (origin_index + direction) % DIRECTIONS.size()
+    @facing = DIRECTIONS[origin_index]
   end
 end
