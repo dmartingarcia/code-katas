@@ -16,6 +16,7 @@ class Menu
   def self.menu_loop
     robot = Robot.new
     show_menu
+
     loop do
       menu_option = capture_menu_option
       case menu_option
@@ -32,18 +33,18 @@ class Menu
         show_menu
       when "Q"
         quit_command()
-        return()
       end
     end
   end
 
   def self.capture_menu_option
     cli_input = gets.chomp()
-    cli_input.split("").first
+    cli_input.split("").first.upcase()
   end
 
   def self.quit_command
     puts "Robot going offline"
+    exit()
   end
 
   def self.print_position(robot)
